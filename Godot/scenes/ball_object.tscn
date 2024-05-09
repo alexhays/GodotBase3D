@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://drh5g34nscbqs"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xvueg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2ptrf"]
+albedo_color = Color(0.389618, 0.331758, 0.685042, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_av0cs"]
+material = SubResource("StandardMaterial3D_2ptrf")
+
+[node name="BallObject" type="RigidBody3D"]
+collision_layer = 2
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_xvueg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_av0cs")

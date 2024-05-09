@@ -1,0 +1,123 @@
+[gd_scene load_steps=11 format=3 uid="uid://csooxda68wows"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_xka1b"]
+[ext_resource type="Script" path="res://scripts/Game.gd" id="2_ugfwk"]
+[ext_resource type="AudioStream" uid="uid://cb66t8sfi2x0d" path="res://assets/Odyssey.mp3" id="3_7t185"]
+[ext_resource type="PackedScene" uid="uid://cvyv0yieehbj1" path="res://scenes/free_cam.tscn" id="4_oyk03"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xnk3y"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_lvg62"]
+sky_material = SubResource("ProceduralSkyMaterial_xnk3y")
+
+[sub_resource type="Environment" id="Environment_vpsqg"]
+background_mode = 2
+sky = SubResource("Sky_lvg62")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xtq66"]
+albedo_color = Color(7.09929e-07, 0.400108, 4.81307e-07, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qc6ph"]
+material = SubResource("StandardMaterial3D_xtq66")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dugfr"]
+size = Vector3(2, 0.01, 2)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_xka1b")
+
+[node name="Menu" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 100
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 128
+text = "Paused"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Game" type="Node3D" parent="."]
+script = ExtResource("2_ugfwk")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Game"]
+stream = ExtResource("3_7t185")
+autoplay = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Game"]
+environment = SubResource("Environment_vpsqg")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Game"]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="GroundPlanes" type="Node3D" parent="Game"]
+transform = Transform3D(7.08345, 0, 0, 0, 1, 0, 0, 0, 7.08345, 0, 0, 0)
+
+[node name="Ground" type="MeshInstance3D" parent="Game/GroundPlanes"]
+transform = Transform3D(20, 0, 0, 0, 1, 0, 0, 0, 20, 0, -0.872493, 0)
+mesh = SubResource("PlaneMesh_qc6ph")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Game/GroundPlanes/Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game/GroundPlanes/Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_dugfr")
+
+[node name="Ground2" type="MeshInstance3D" parent="Game/GroundPlanes"]
+transform = Transform3D(20, 0, 0, 0, -4.37114e-08, -20, 0, 1, -8.74228e-07, 0, 16.5062, -19.6691)
+mesh = SubResource("PlaneMesh_qc6ph")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Game/GroundPlanes/Ground2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game/GroundPlanes/Ground2/StaticBody3D"]
+shape = SubResource("BoxShape3D_dugfr")
+
+[node name="Ground4" type="MeshInstance3D" parent="Game/GroundPlanes"]
+transform = Transform3D(-20, -8.74228e-08, 7.64274e-14, 0, -4.37114e-08, -20, 1.74846e-06, -1, 8.74228e-07, 0, 16.5062, 19.3989)
+mesh = SubResource("PlaneMesh_qc6ph")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Game/GroundPlanes/Ground4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game/GroundPlanes/Ground4/StaticBody3D"]
+shape = SubResource("BoxShape3D_dugfr")
+
+[node name="Ground3" type="MeshInstance3D" parent="Game/GroundPlanes"]
+transform = Transform3D(-8.74228e-07, 1, -8.74228e-07, 0, -4.37114e-08, -20, -20, -4.37114e-08, 1.80322e-13, -19.5891, 16.5062, 0.252686)
+mesh = SubResource("PlaneMesh_qc6ph")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Game/GroundPlanes/Ground3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game/GroundPlanes/Ground3/StaticBody3D"]
+shape = SubResource("BoxShape3D_dugfr")
+
+[node name="Ground5" type="MeshInstance3D" parent="Game/GroundPlanes"]
+transform = Transform3D(2.62268e-06, -1, 8.74228e-07, -4.23516e-21, -4.37114e-08, -20, 20, 1.31134e-07, -2.5675e-13, 19.9249, 16.5062, 0.252686)
+mesh = SubResource("PlaneMesh_qc6ph")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Game/GroundPlanes/Ground5"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game/GroundPlanes/Ground5/StaticBody3D"]
+shape = SubResource("BoxShape3D_dugfr")
+
+[node name="FreeCam" parent="Game" instance=ExtResource("4_oyk03")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.23524, 0)
